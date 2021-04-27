@@ -1,60 +1,44 @@
 package ru.netology;
 
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.Assertions;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static ru.netology.Main.phoneContacts;
 
 class PhoneContactsTest {
 
-    @BeforeAll
-    public static void beforeAll () {
-        PhoneContacts phoneContacts = new PhoneContacts(new HashMap<String, List<Contact>>());
-        System.out.println(phoneContacts.hashCode());
-        Assertions.assertNotNull(phoneContacts);
-    }
-
-    @AfterAll
-    public static void afterAll () {
-        PhoneContacts phoneContacts2 = new PhoneContacts(new HashMap<String, List<Contact>>());
-        Assertions.assertNotSame(phoneContacts, phoneContacts2);
-    }
-
-    @BeforeEach
-    public void beforeEach() {
-        Assertions.assertNotNull(phoneContacts);
-        phoneContacts.addContactToGroup(new Contact("IVAN","qwer"), new String[1]);
-    }
-
-    @AfterEach
-    public void afterEach () {
-
-        Assertions.assertNotNull(phoneContacts);
-        System.out.println(phoneContacts.hashCode());
-    }
-
-
     @org.junit.jupiter.api.Test
     void createGroup() {
-        List<Contact> newGroup = new ArrayList<>();
-        phoneContacts.createGroup("Test");
-        Assertions.assertNotNull(phoneContacts.hashCode());
+        String testStr = "Test";
+        List<Contact> testList = new ArrayList<>();
+        Map<String, List<Contact>> expected = new HashMap<String,List<Contact>>();
+        expected.put(testStr,testList);
+        phoneContacts.createGroup(testStr);
+        //Assertions.assertEquals(expected, phoneContacts.getGroups());
+        Assertions.assertTrue(phoneContacts.getGroups().containsKey(testStr));
     }
 
     @org.junit.jupiter.api.Test
     void addContactToGroup() {
-        Contact contact = new Contact("IVAN","11213121");
-        phoneContacts.addContactToGroup(contact, new String[1]);
-        Assertions.assertNotSame(contact, phoneContacts);
+        Contact testContact = new Contact("IVAN","11213121");
+        String[] groups = new String[1];
+        groups[0] = "Семья";
+        phoneContacts.addContactToGroup(testContact, groups);
+        Assertions.assertTrue(phoneContacts.getGroups().get(groups[0]).contains(testContact));
     }
 
     @org.junit.jupiter.api.Test
     void print() {
-        Assertions.assertNotEquals(phoneContacts.toString(), phoneContacts.hashCode());
+        Contact testContact = new Contact("IVAN","11213121");
+        String[] groups = new String[1];
+        groups[0] = "Семья";
+        phoneContacts.addContactToGroup(testContact, groups);
+        String testString = "";
+        for ( Map.Entry<String, List <Contact>> entry : phoneContacts.getGroups().entrySet()) {
+           testString = "Группа: " + entry.getKey() + "\nСписок контактов: \n" + entry.getValue();
+        }
+        Assertions.assertNotNull(testString);
     }
 }

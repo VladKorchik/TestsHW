@@ -40,6 +40,6 @@ public class Contact {
 
     @Override
     public String toString() {
-        return "Имя: " + name + ", " + "Номер телефона " + phoneNumber + "\n";
+        return ("Имя: " + name + ", " + "Номер телефона " + phoneNumber + "\n");
     }
 }

@@ -3,6 +3,8 @@ package ru.netology;
 import java.util.*;
 
 public class PhoneContacts {
+
+
     private Map <String, List <Contact>> groups;
 
     public PhoneContacts(Map<String, List<Contact>> groups) {
@@ -30,5 +32,9 @@ public class PhoneContacts {
         for ( Map.Entry<String, List <Contact>> entry : groups.entrySet()) {
             System.out.println("Группа: " + entry.getKey() + "\nСписок контактов: \n" + entry.getValue() );
         }
+    }
+
+    public Map<String, List<Contact>> getGroups() {
+        return groups;
     }
 }
